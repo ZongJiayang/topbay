@@ -1,0 +1,1 @@
+export const SAVEUSER_DATA = "saveuser_data";

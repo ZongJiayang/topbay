@@ -1,0 +1,1 @@
+export const INITALIZATION_DATA = "Initialization_data";
