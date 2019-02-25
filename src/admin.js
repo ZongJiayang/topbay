@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout} from 'antd';
+import { Layout,Avatar} from 'antd';
 import { Logo } from './style';
 import {connect} from 'react-redux';
 import Menus from './components/menus'
@@ -12,6 +12,7 @@ class Admin extends Component {
     return (
         <Layout className="layout">
           <Header>
+            <Avatar style={{ float: "right",margin:12}} size="large" icon="user"  />
             <Logo/>
             <Menus/>
           </Header>

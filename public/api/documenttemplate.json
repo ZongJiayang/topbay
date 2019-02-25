@@ -1,0 +1,30 @@
+{
+    "code":0,
+    "msg":"ok",
+    "data":[
+        {
+            "id":"chailubaoxiaodan",
+            "path":"/index/invoices/evection",
+            "logogram":"差旅",
+            "name":"差旅报销单"
+        },
+        {
+            "path":"/index/invoices/reimbursement",
+            "id":"feiyongbaoxiaodan",
+            "logogram":"费用",
+            "name":"费用报销单"
+        },
+        {
+            "path":"/index/invoices/borrow",
+            "id":"yuzhidan",
+            "logogram":"预支",
+            "name":"预支单"
+        },
+        {
+            "path":"/index/invoices/repay",
+            "id":"huankuandan",
+            "logogram":"还款",
+            "name":"还款单"
+        }
+    ]
+}

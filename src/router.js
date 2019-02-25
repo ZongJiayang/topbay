@@ -4,6 +4,11 @@ import App from './App';
 import Admin from './admin';
 //单据
 import Invoices from './pages/invoices';
+//单据详情
+import InvoicesReimbursement from './pages/invoices/pages/reimbursement';
+import InvoicesBorrow from './pages/invoices/pages/borrow';
+import InvoicesEvection from './pages/invoices/pages/evection';
+import InvoicesRepay from './pages/invoices/pages/repay';
 //账户
 import Financechange from './pages/finance/change';
 import Financeme from './pages/finance/me';
@@ -31,7 +36,14 @@ class IRouter extends Component{
                     <Route path="/login" exact component={Admin}/>
                     <Route path="/index" render={()=>
                         <Admin>
-                            <Route path="/index/invoices" exact component={Invoices}/>
+                            <Route path="/index/invoices" render={()=>
+                                <Invoices>
+                                    <Route path="/index/invoices/borrow/:id" exact component={InvoicesBorrow}/>
+                                    <Route path="/index/invoices/evection/:id" exact component={InvoicesEvection}/>
+                                    <Route path="/index/invoices/reimbursement/:id" exact component={InvoicesReimbursement}/>
+                                    <Route path="/index/invoices/repay/:id" exact component={InvoicesRepay}/>
+                                </Invoices>
+                            }/>
 
                             <Route path="/index/finance/me" exact component={Financeme}/>
                             <Route path="/index/finance/change" exact component={Financechange}/>

@@ -1,97 +1,77 @@
-import React,{Component} from 'react';
-import { Card, Form, Col, Row,Menu, Dropdown, Icon, Button, } from 'antd';
-import {connect} from 'react-redux'
-
-import Reimbursement from './pages/reimbursement/index';
+import React, { Component } from 'react';
+import { Card, Col, Row, Menu, Dropdown, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import Myinvoices from './pages/myinvoices';
-
 import * as actionCreators from './store/actionCretors';
-import {InitializationList} from '../basics/depa/store/actionCretors'
 
+const menu = (data)=>
+    <Menu>    
+        {data.map((item)=>{
+            return (
+                <Menu.Item key={item.get("id")}>
+                    <NavLink to={item.get("path")+"/"+item.get("id")}>{item.get("name")}</NavLink>
+                </Menu.Item>
+            )
+        }) }
+    </Menu>
+;
 
-class Invoices extends Component{
+class Invoices extends Component {
 
-    handleSunmit = ()=>{
-        let userInfo = this.props.form.getFieldValue("username");
-        console.log(userInfo)
+    componentDidMount() {
+        this.props.getOrdinaryList("847bef6cf7394107bb59b15fb39ef56c");
+        this.props.getDocumentTemplate();
     }
 
-    componentDidMount(){
-      this.props.getOrdinaryList(1);
-      this.props.addusersByDept();
-    }
-
-    onClick = ({ key }) => {
-        this.props.getInitTypeList(key)
-    };
-    
-    menu = (
-      <Menu onClick={this.onClick}>
-        <Menu.Item key="1">普通费用报销单</Menu.Item>
-        <Menu.Item key="2">差旅费用报销单</Menu.Item>
-        <Menu.Item key="3">借款单</Menu.Item>
-        <Menu.Item key="4">还款单</Menu.Item>
-      </Menu>
-    );
-
-    render(){
-        return(
-            <Row gutter={24} style={{margin:10}}>
-            <Col span={6}>
-                <Card 
-                    title="我的单据" 
-                    bordered={true}>
-                    <Myinvoices
-                      inittypes={this.props.typelist}
-                      initdata={this.props.ordinarylist}/>
-                </Card>
-            </Col>
-            <Col span={18}>
-                <Card 
-                    title="新建单据" 
-                    bordered={true} 
-                    extra={
-                            <Dropdown overlay={this.menu}>
-                              <span>
-                                创建单据 <Icon type="down" />
-                              </span>
+    render() {
+        return (
+            <Row gutter={24} style={{ margin: 10 }}>
+                <Col span={6}>
+                    <Card
+                        title="我的单据"
+                        bordered={true}>
+                        <Myinvoices
+                            costtype={this.props.costtype}
+                            initdata={this.props.ordinarylist} />
+                    </Card>
+                </Col>
+                <Col span={18}>
+                    <Card
+                        title="新建单据"
+                        bordered={true}
+                        extra={
+                            <Dropdown overlay={menu(this.props.costtype)}>
+                                <span>
+                                    创建单据 <Icon type="down" />
+                                </span>
                             </Dropdown>
-                    }
-                    actions={[<Button type="primary">提交</Button>,<Button>保存</Button>]}>
-                        <Reimbursement
-                          deptdata={this.props.dept}  
-                        />
-                </Card>
-            </Col>
-        </Row>
+                        }>
+                        {this.props.children}
+                    </Card>
+                </Col>
+            </Row>
         )
     }
 }
 
-const FromLoginAntd = Form.create()(Invoices);
-
-
-const mapStateToProps = (state)=>{
-  return {
-      typelist:state.getIn(["invoices","typelist"]),
-      ordinarylist:state.getIn(["invoices","ordinarylist"]),
-      dept: state.getIn(["dept","tree"]),
-      types:""
-  }
+const mapStateToProps = (state) => {
+    return {
+        ordinarylist: state.getIn(["invoices", "ordinarylist"]),
+        costtype: state.getIn(["invoices","costtype"]),
+    }
 }
 
-const mapDispathToProps = (dispatch)=>{
-  return {
-      getInitTypeList(data){
-          dispatch(actionCreators.getTypeList(data));
-      },
-      getOrdinaryList(data){
-        dispatch(actionCreators.getordinarycostList(data));
-      },
-      addusersByDept(){
-        dispatch(InitializationList())
-      }
-  }
+const mapDispathToProps = (dispatch) => {
+    return {
+        //得到单据列表
+        getOrdinaryList(data) {
+            dispatch(actionCreators.getordinarycostList(data));
+        },
+        getDocumentTemplate(){
+            dispatch(actionCreators.getDocumenttemplate());
+        }
+    }
 }
 
-export default connect(mapStateToProps,mapDispathToProps)(FromLoginAntd);
+export default connect(mapStateToProps, mapDispathToProps)(Invoices);

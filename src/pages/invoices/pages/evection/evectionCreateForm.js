@@ -3,7 +3,7 @@ import { Form, InputNumber, Input, Select, Modal} from 'antd';
 import convertCurrency from '../../../../static/utils/convertCurrency'
 const Option = Select.Option;
 
-const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
+const EvectionCreateForm = Form.create({ name: 'form_in_modal' })(
     class extends Component {
 
         handleSelectChange = (value) => {
@@ -82,4 +82,4 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
     }
 );
 
-export default CollectionCreateForm;
+export default EvectionCreateForm;

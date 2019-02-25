@@ -15,10 +15,6 @@
                     "key":"/index/finance/me"
                 },
                 {
-                    "title":"资金变化",
-                    "key":"/index/finance/change"
-                },
-                {
                     "title":"账户列表",
                     "key":"/index/finance/list"
                 }
